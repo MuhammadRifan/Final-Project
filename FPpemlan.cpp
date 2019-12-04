@@ -47,10 +47,6 @@ int main() {
 		system("cls");
 		printf("+------------------------------+-----------------------------+\n");
 		printf("+---------------------+ Selamat Datang +---------------------+\n");
-<<<<<<< HEAD
-=======
-		printf("+---------------------+ Di Rumah Sakit +---------------------+\n");
->>>>>>> 9bfc30b8e5a0d308a60e9c10dc2f4d2c317a0667
 		printf("+------------------------------+-----------------------------+\n");
 		printf("+-----  1. Pasien Baru                                  -----+\n");
 		printf("+-----  2. Ubah Data Pasien                             -----+\n");
@@ -77,28 +73,11 @@ int main() {
 				printf("\nMasukkan Jenis Kamar untuk pasien : ");
 				scanf("%d",&pilih);
 				fflush(stdin);
-<<<<<<< HEAD
 				
 				if (pilih == 1) strcpy(kmr[jumlah].jkamar, "I");
 				else if (pilih == 2) strcpy(kmr[jumlah].jkamar, "II");
 				else if (pilih == 3) strcpy(kmr[jumlah].jkamar, "III");
 				else if (pilih == 4) strcpy(kmr[jumlah].jkamar, "VIP");
-=======
-				switch(pilih){
-					case 1 : 
-						strcpy(kmr[jumlah].jkamar, "I");
-					break;
-					case 2 :
-						strcpy(kmr[jumlah].jkamar, "II");
-					break;
-					case 3 :
-						strcpy(kmr[jumlah].jkamar, "III");
-					break;
-					case 4 : 
-						strcpy(kmr[jumlah].jkamar, "VIP");
-					break;
-				}
->>>>>>> 9bfc30b8e5a0d308a60e9c10dc2f4d2c317a0667
 				
 				printf("\nMasukkan Nomor Kamar : ");
 				scanf("%d",&kmr[jumlah].nkamar);
@@ -117,7 +96,6 @@ int main() {
 				printf("\nMasukkan Bulan Lahir : ");
 				scanf("%d",&pilih);
 				fflush(stdin);
-<<<<<<< HEAD
 				
 				if (pilih == 1) strcpy(kmr[jumlah].tgl.bulan, "Januari");
 				else if (pilih == 2) strcpy(kmr[jumlah].tgl.bulan, "Februari");
@@ -132,46 +110,6 @@ int main() {
 				else if (pilih == 11) strcpy(kmr[jumlah].tgl.bulan, "November");
 				else if (pilih == 12) strcpy(kmr[jumlah].tgl.bulan, "Desember");
 				
-=======
-				switch(pilih){
-					case 1 : 
-						strcpy(kmr[jumlah].tgl.bulan, "Januari");
-					break;
-					case 2 :
-						strcpy(kmr[jumlah].tgl.bulan, "Februari");
-					break;
-					case 3 :
-						strcpy(kmr[jumlah].tgl.bulan, "Maret");
-					break;
-					case 4 : 
-						strcpy(kmr[jumlah].tgl.bulan, "April");
-					break;
-					case 5 : 
-						strcpy(kmr[jumlah].tgl.bulan, "Mei");
-					break;
-					case 6 : 
-						strcpy(kmr[jumlah].tgl.bulan, "Juni");
-					break;
-					case 7 : 
-						strcpy(kmr[jumlah].tgl.bulan, "Juli");
-					break;
-					case 8 : 
-						strcpy(kmr[jumlah].tgl.bulan, "Agustus");
-					break;
-					case 9 : 
-						strcpy(kmr[jumlah].tgl.bulan, "September");
-					break;
-					case 10 : 
-						strcpy(kmr[jumlah].tgl.bulan, "Oktober");
-					break;
-					case 11 : 
-						strcpy(kmr[jumlah].tgl.bulan, "November");
-					break;
-					case 12 : 
-						strcpy(kmr[jumlah].tgl.bulan, "Desember");
-					break;
-				}
->>>>>>> 9bfc30b8e5a0d308a60e9c10dc2f4d2c317a0667
 				psn[jumlah].id = jumlah+1;
 				
 				printf("\nMasukkan Tahun Masuk : ");
@@ -179,21 +117,14 @@ int main() {
 				fflush(stdin);
 				system("cls");
 				printf("\n\nData Pasien \n");
-<<<<<<< HEAD
+				
 				printf("\nNama\t\t\t: %s",psn[jumlah].nama);
 				printf("\nID\t\t\t: %d",psn[jumlah].id);
 				printf("\nJenis Penyakit\t\t: %s",psn[jumlah].jpenyakit);
 				printf("\nJenis Kamar\t\t: %s",kmr[jumlah].jkamar);
 				printf("\nNomor Kamar\t\t: %d",kmr[jumlah].nkamar);
 				printf("\nHari dan Tanggal Masuk\t: %s, %d %s %d",kmr[jumlah].tgl.hari,kmr[jumlah].tgl.tanggal,kmr[jumlah].tgl.bulan,kmr[jumlah].tgl.tahun);
-=======
-				printf("\nNama			: %s",psn[jumlah].nama);
-				printf("\nID			: %d",psn[jumlah].id);
-				printf("\nJenis Penyakit		: %s",psn[jumlah].jpenyakit);
-				printf("\nJenis Kamar		: %s",kmr[jumlah].jkamar);
-				printf("\nNomor Kamar		: %d",kmr[jumlah].nkamar);
-				printf("\nHari dan Tanggal Masuk  : %s, %d %s %d",kmr[jumlah].tgl.hari,kmr[jumlah].tgl.tanggal,kmr[jumlah].tgl.bulan,kmr[jumlah].tgl.tahun);
->>>>>>> 9bfc30b8e5a0d308a60e9c10dc2f4d2c317a0667
+				
 				getch();
 				
 				jumlah++;
