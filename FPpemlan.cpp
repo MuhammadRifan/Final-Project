@@ -11,31 +11,48 @@
 		- TAMBAH DATA										
 		- UBAH DATA										
 		- PENCARIAN DATA BERDASARKAN KRITERIA DATANYA (NAMA PASIEN, ID PASIEN, NOMOR KAMAR)										
-		- PENGURUTAN DATA BERDASARKAN KRITERIA DATANYA (ID PASIEN, NMA, JENIS PENYAKIT, JENSI KAMAR, NOMOR KMAR, TANGGAL MASUK)	*/
+		- PENGURUTAN DATA BERDASARKAN KRITERIA DATANYA (ID PASIEN, NAMA, JENIS PENYAKIT, JENIS KAMAR, NOMOR KAMAR, TANGGAL MASUK)	*/
 		
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <conio.h>
 
+#include <iostream>
+using namespace std;
+
 struct pasien{
-	char nama[100];
+	string nama;
 	int id;
-	char jpenyakit[100];
+	string jpenyakit;
 }; pasien psn[100];
 
 struct tanggal{
-	char hari[100];
 	int tanggal;
-	char bulan[100];
+	string bulan;
 	int tahun;
 };
 
 struct kamar{
-	char jkamar[100];
+	string jkamar;
 	int nkamar;
 	tanggal tgl;
 }; kamar kmr[100];
+
+string printBulan(string bln){
+	if (bln.compare("01") == 0) return "Januari";
+	else if (bln.compare("02") == 0) return "Februari";
+	else if (bln.compare("03") == 0) return "Maret";
+	else if (bln.compare("04") == 0) return "April";
+	else if (bln.compare("05") == 0) return "Mei";
+	else if (bln.compare("06") == 0) return "Juni";
+	else if (bln.compare("07") == 0) return "Juli";
+	else if (bln.compare("08") == 0) return "Agustus";
+	else if (bln.compare("09") == 0) return "September";
+	else if (bln.compare("10") == 0) return "Oktober";
+	else if (bln.compare("11") == 0) return "November";
+	else if (bln.compare("12") == 0) return "Desember";
+}
 
 int main() {
 	
@@ -51,7 +68,7 @@ int main() {
 		printf("+-----  1. Pasien Baru                                  -----+\n");
 		printf("+-----  2. Ubah Data Pasien                             -----+\n");
 		printf("+-----  3. Mencari Data Pasien                          -----+\n");
-		printf("+-----  4. Tampilan Data Pasien Secara Urut             -----+\n");
+		printf("+-----  4. Tampikan Data Pasien Secara Urut             -----+\n");
 		printf("+-----  5. Keluar                                       -----+\n");
 		printf("+---------------------------+--+--+--------------------------+\n");
 		printf(" Silahkan pilih: ");
@@ -63,67 +80,66 @@ int main() {
 			case 1: //Pasien Baru
 				printf("Masukkan Data Pasien Baru\n\n");
 				printf("Masukkan Nama Pasien : ");
-				gets(psn[jumlah].nama);
+				getline(cin,psn[jumlah].nama);
+				fflush(stdin);
 				
-				printf("Masukkan Jenis Penyakit : ");
-				gets(psn[jumlah].jpenyakit);
+				printf("\nMasukkan Jenis Penyakit : ");
+				getline(cin,psn[jumlah].jpenyakit);
+				fflush(stdin);
 				
 				printf("\nList kamar Pasien\n");
 				printf("1. I\n2. II\n3. III\n4. VIP");
 				printf("\nMasukkan Jenis Kamar untuk pasien : ");
-				scanf("%d",&pilih);
+				scanf("%d", &pilih);
 				fflush(stdin);
 				
-				if (pilih == 1) strcpy(kmr[jumlah].jkamar, "I");
-				else if (pilih == 2) strcpy(kmr[jumlah].jkamar, "II");
-				else if (pilih == 3) strcpy(kmr[jumlah].jkamar, "III");
-				else if (pilih == 4) strcpy(kmr[jumlah].jkamar, "VIP");
+				if (pilih == 1) kmr[jumlah].jkamar = "I";
+				else if (pilih == 2) kmr[jumlah].jkamar = "II";
+				else if (pilih == 3) kmr[jumlah].jkamar = "III";
+				else if (pilih == 4) kmr[jumlah].jkamar = "VIP";
 				
 				printf("\nMasukkan Nomor Kamar : ");
-				scanf("%d",&kmr[jumlah].nkamar);
-				fflush(stdin);
-				
-				printf("\nMasukkan Hari Masuk : ");
-				gets(kmr[jumlah].tgl.hari);
+				scanf("%d", &kmr[jumlah].nkamar);
 				fflush(stdin);
 				
 				printf("\nMasukkan Tanggal Masuk : ");
-				scanf("%d",&kmr[jumlah].tgl.tanggal);
+				scanf("%d", &kmr[jumlah].tgl.tanggal);
 				fflush(stdin);
 				
 				printf("\nList Bulan\n");
 				printf("1.  Januari\n2.  Februari\n3.  Maret\n4.  April\n5.  Mei\n6.  Juni\n7.  Juli\n8.  Agustus\n9.  September\n10. Oktober\n11. November\n12. Desember");
-				printf("\nMasukkan Bulan Lahir : ");
-				scanf("%d",&pilih);
+				printf("\nMasukkan Bulan Masuk : ");
+				scanf("%d", &pilih);
 				fflush(stdin);
 				
-				if (pilih == 1) strcpy(kmr[jumlah].tgl.bulan, "Januari");
-				else if (pilih == 2) strcpy(kmr[jumlah].tgl.bulan, "Februari");
-				else if (pilih == 3) strcpy(kmr[jumlah].tgl.bulan, "Maret");
-				else if (pilih == 4) strcpy(kmr[jumlah].tgl.bulan, "April");
-				else if (pilih == 5) strcpy(kmr[jumlah].tgl.bulan, "Mei");
-				else if (pilih == 6) strcpy(kmr[jumlah].tgl.bulan, "Juni");
-				else if (pilih == 7) strcpy(kmr[jumlah].tgl.bulan, "Juli");
-				else if (pilih == 8) strcpy(kmr[jumlah].tgl.bulan, "Agustus");
-				else if (pilih == 9) strcpy(kmr[jumlah].tgl.bulan, "September");
-				else if (pilih == 10) strcpy(kmr[jumlah].tgl.bulan, "Oktober");
-				else if (pilih == 11) strcpy(kmr[jumlah].tgl.bulan, "November");
-				else if (pilih == 12) strcpy(kmr[jumlah].tgl.bulan, "Desember");
+				if (pilih == 1) kmr[jumlah].tgl.bulan = "01";
+				else if (pilih == 2) kmr[jumlah].tgl.bulan = "02";
+				else if (pilih == 3) kmr[jumlah].tgl.bulan = "03";
+				else if (pilih == 4) kmr[jumlah].tgl.bulan = "04";
+				else if (pilih == 5) kmr[jumlah].tgl.bulan = "05";
+				else if (pilih == 6) kmr[jumlah].tgl.bulan = "06";
+				else if (pilih == 7) kmr[jumlah].tgl.bulan = "07";
+				else if (pilih == 8) kmr[jumlah].tgl.bulan = "08";
+				else if (pilih == 9) kmr[jumlah].tgl.bulan = "09";
+				else if (pilih == 10) kmr[jumlah].tgl.bulan = "10";
+				else if (pilih == 11) kmr[jumlah].tgl.bulan = "11";
+				else if (pilih == 12) kmr[jumlah].tgl.bulan = "12";
 				
 				psn[jumlah].id = jumlah+1;
 				
 				printf("\nMasukkan Tahun Masuk : ");
-				scanf("%d",&kmr[jumlah].tgl.tahun);
+				scanf("%d", &kmr[jumlah].tgl.tahun);
 				fflush(stdin);
-				system("cls");
-				printf("\n\nData Pasien \n");
 				
-				printf("\nNama\t\t\t: %s",psn[jumlah].nama);
-				printf("\nID\t\t\t: %d",psn[jumlah].id);
-				printf("\nJenis Penyakit\t\t: %s",psn[jumlah].jpenyakit);
-				printf("\nJenis Kamar\t\t: %s",kmr[jumlah].jkamar);
-				printf("\nNomor Kamar\t\t: %d",kmr[jumlah].nkamar);
-				printf("\nHari dan Tanggal Masuk\t: %s, %d %s %d",kmr[jumlah].tgl.hari,kmr[jumlah].tgl.tanggal,kmr[jumlah].tgl.bulan,kmr[jumlah].tgl.tahun);
+				system("cls");
+				printf("\nData Pasien \n");
+				
+				cout << "\nNama\t\t: " << psn[jumlah].nama;
+				printf("\nID\t\t: %d", psn[jumlah].id);
+				cout << "\nJenis Penyakit\t: " << psn[jumlah].jpenyakit;
+				cout << "\nJenis Kamar\t: "  << kmr[jumlah].jkamar;
+				printf("\nNomor Kamar\t: %d", kmr[jumlah].nkamar);
+				cout << "\nTanggal Masuk\t: " << kmr[jumlah].tgl.tanggal << " " << printBulan(kmr[jumlah].tgl.bulan) << " " << kmr[jumlah].tgl.tahun;
 				
 				getch();
 				
@@ -134,7 +150,120 @@ int main() {
 				break;
 			case 3 : //binary search
 				break;
-			case 4 : //
+			case 4 : // shell sort
+				printf("Pengurutan berdasarkan: \n");
+				printf("1. ID Pasien\n2. Nama\n3. Jenis Penyakit\n4. Jenis Kamar\n5. Nomor Kamar\n6. Tanggal Masuk");
+				printf("\nMasukkan kriteria : ");
+				scanf("%d", &pilih);
+				
+				int gap, right, jump, i, batas[100][100];
+				
+				system("cls");
+				
+				if (pilih == 1) {
+					printf("Data sesuai ID:\n");
+					for (gap = jumlah/2; gap > 0; gap /= 2) {
+						for (right = gap; right < jumlah; right ++) {
+							int tempINT[4] = {psn[right].id, kmr[right].nkamar, kmr[right].tgl.tanggal, kmr[right].tgl.tahun};
+							string tempString[4] = {psn[right].nama, psn[right].jpenyakit, kmr[right].jkamar, kmr[right].tgl.bulan};
+							
+							for (jump = right; jump >= gap && psn[jump-gap].id > tempINT[0]; jump -= gap) {
+								psn[jump].id = psn[jump-gap].id;
+								psn[jump].nama = psn[jump-gap].nama;
+								psn[jump].jpenyakit = psn[jump-gap].jpenyakit;
+								kmr[jump].nkamar = kmr[jump-gap].nkamar;
+								kmr[jump].jkamar = kmr[jump-gap].jkamar;
+								kmr[jump].tgl.tanggal = kmr[jump-gap].tgl.tanggal;
+								kmr[jump].tgl.bulan = kmr[jump-gap].tgl.bulan;
+								kmr[jump].tgl.tahun = kmr[jump-gap].tgl.tahun;
+							}
+							
+							psn[jump].id = tempINT[0];
+							psn[jump].nama = tempString[0];
+							psn[jump].jpenyakit = tempString[1];
+							kmr[jump].nkamar = tempINT[1];
+							kmr[jump].jkamar = tempString[2];
+							kmr[jump].tgl.tanggal = tempINT[2];
+							kmr[jump].tgl.bulan = tempString[3];
+							kmr[jump].tgl.tahun = tempINT[3];
+						}
+					}
+				} else if (pilih == 2) {
+					printf("Data sesuai nama:\n");
+				} else if (pilih == 3) {
+					printf("Data sesuai jenis penyakit:\n");
+				} else if (pilih == 4) {
+					printf("Data jenis kamar:\n");
+					for (gap = jumlah/2; gap > 0; gap /= 2) {
+						for (right = gap; right < jumlah; right ++) {
+							int tempINT[4] = {psn[right].id, kmr[right].nkamar, kmr[right].tgl.tanggal, kmr[right].tgl.tahun};
+							string tempString[4] = {psn[right].nama, psn[right].jpenyakit, kmr[right].jkamar, kmr[right].tgl.bulan};
+							
+							for (jump = right; jump >= gap && kmr[jump-gap].jkamar > tempString[2]; jump -= gap) {
+								psn[jump].id = psn[jump-gap].id;
+								psn[jump].nama = psn[jump-gap].nama;
+								psn[jump].jpenyakit = psn[jump-gap].jpenyakit;
+								kmr[jump].nkamar = kmr[jump-gap].nkamar;
+								kmr[jump].jkamar = kmr[jump-gap].jkamar;
+								kmr[jump].tgl.tanggal = kmr[jump-gap].tgl.tanggal;
+								kmr[jump].tgl.bulan = kmr[jump-gap].tgl.bulan;
+								kmr[jump].tgl.tahun = kmr[jump-gap].tgl.tahun;
+								
+							}
+							
+							psn[jump].id = tempINT[0];
+							psn[jump].nama = tempString[0];
+							psn[jump].jpenyakit = tempString[1];
+							kmr[jump].nkamar = tempINT[1];
+							kmr[jump].jkamar = tempString[2];
+							kmr[jump].tgl.tanggal = tempINT[2];
+							kmr[jump].tgl.bulan = tempString[3];
+							kmr[jump].tgl.tahun = tempINT[3];
+						}
+					}
+				}else if (pilih == 5) {
+					printf("Data sesuai nomor kamar:\n");
+					for (gap = jumlah/2; gap > 0; gap /= 2) {
+						for (right = gap; right < jumlah; right ++) {
+							int tempINT[4] = {psn[right].id, kmr[right].nkamar, kmr[right].tgl.tanggal, kmr[right].tgl.tahun};
+							string tempString[4] = {psn[right].nama, psn[right].jpenyakit, kmr[right].jkamar, kmr[right].tgl.bulan};
+							
+							for (jump = right; jump >= gap && kmr[jump-gap].nkamar > tempINT[1]; jump -= gap) {
+								psn[jump].id = psn[jump-gap].id;
+								psn[jump].nama = psn[jump-gap].nama;
+								psn[jump].jpenyakit = psn[jump-gap].jpenyakit;
+								kmr[jump].nkamar = kmr[jump-gap].nkamar;
+								kmr[jump].jkamar = kmr[jump-gap].jkamar;
+								kmr[jump].tgl.tanggal = kmr[jump-gap].tgl.tanggal;
+								kmr[jump].tgl.bulan = kmr[jump-gap].tgl.bulan;
+								kmr[jump].tgl.tahun = kmr[jump-gap].tgl.tahun;
+								
+							}
+							
+							psn[jump].id = tempINT[0];
+							psn[jump].nama = tempString[0];
+							psn[jump].jpenyakit = tempString[1];
+							kmr[jump].nkamar = tempINT[1];
+							kmr[jump].jkamar = tempString[2];
+							kmr[jump].tgl.tanggal = tempINT[2];
+							kmr[jump].tgl.bulan = tempString[3];
+							kmr[jump].tgl.tahun = tempINT[3];
+						}
+					}
+				} else if (pilih == 6) {
+					printf("Data sesuai tanggal masuk:\n");
+				}
+				
+				for (i = 0; i < jumlah; i++) {
+					printf("%d. ID: %d, ", i+1, psn[i].id);
+					cout << "Nama: " << psn[i].nama;
+					cout << ", Kamar " << kmr[i].jkamar << " - " << kmr[i].nkamar;
+					cout << ", Penyakit: " << psn[i].jpenyakit;
+					cout << ", Tanggal Masuk: " << kmr[i].tgl.tanggal << " " << printBulan(kmr[i].tgl.bulan) << " " << kmr[i].tgl.tahun << endl << endl;
+				}
+				
+				system("pause");
+				
 				break;
 			case 5 : //keluar
 				printf("+------------------------------+-----------------------------+\n");
