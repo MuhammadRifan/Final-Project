@@ -305,7 +305,7 @@ int main() {
 				ubahdata();
 				break;
 			case 3 : //binary search
-				printf("Pengurutan berdasarkan: \n");
+				printf("Pilih Menu Search: \n");
 				printf("1. Cari Nama\n2. Cari ID\n3. Cari Nomor Kamar");
 				printf("\nasukkan pilihan : ");
 				scanf("%d", &pilih);
