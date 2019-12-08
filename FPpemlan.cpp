@@ -279,7 +279,7 @@ void binary_search_Nkamar(){
 //	system("cls");
 }
 
-int main(int argc, char *argv[]) {
+int main() {
 	
 	int jumlah=0,dicari,awal=0,ketemu=0;
 	
