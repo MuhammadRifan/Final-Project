@@ -172,7 +172,7 @@ void binary_search_ID(){
 }
 
 void binary_search_Nkamar(){
-	int caridata, i=0, ketemu=0,jumlah;
+	int caridata, i=0,jumlah;
 	int awal=0, akhir;
 	int tengah=(awal+akhir)/2;
 	akhir = jumlah;
@@ -180,22 +180,8 @@ void binary_search_Nkamar(){
     scanf("%d",&caridata);
     while(i<jumlah){
     	if(caridata == kmr[tengah].nkamar){
-			ketemu=1;
-			break;
-		}else if(caridata > kmr[tengah].nkamar){
-    		awal=tengah+1;
-    		tengah=(awal+akhir)/2;
-    		ketemu=1;
-		}else if(caridata < kmr[tengah].nkamar){
-			akhir=tengah-1;
-			tengah=(awal+akhir)/2;
-			ketemu=1;
-		}
-		i++;	
-	}
-	if(ketemu==1){
-		printf("DATA DITEMUKAN");
-		for (i = 0; i < kmr[tengah].nkamar ; i++) {
+			printf("DATA DITEMUKAN");
+			for (i = 0; i < kmr[tengah].nkamar ; i++) {
 			cout << "\nNama\t\t: " << psn[i].nama;
 			printf("\nID\t\t: %d", psn[i].id);
 			cout << "\nJenis Penyakit\t: " << psn[i].jpenyakit;
@@ -203,8 +189,21 @@ void binary_search_Nkamar(){
 			printf("\nNomor Kamar\t: %d", kmr[i].nkamar);
 			cout << "\nTanggal Masuk\t: " << kmr[i].tgl.tanggal << " " << printBulan(kmr[i].tgl.bulan) << " " << kmr[i].tgl.tahun;
 		}
-	}else
-		printf("DATA TIDAK DITEMUKAN");
+			break;
+		}if(awal <= akhir){
+			printf("DATA TIDAK DITEMUKAN");
+			break;
+		}else if(caridata > kmr[tengah].nkamar){
+    		awal=tengah+1;
+    		tengah=(awal+akhir)/2;
+    		i++;
+		}else if(caridata < kmr[tengah].nkamar){
+			akhir=tengah-1;
+			tengah=(awal+akhir)/2;
+			i++;
+		}
+		i++;	
+	}
 	getch();
 	system("cls");
 }
