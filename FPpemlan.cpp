@@ -1,4 +1,4 @@
-/*3. APLIKASI PENDATAAN RUMAH SAKIT												
+ 	/*3. APLIKASI PENDATAAN RUMAH SAKIT												
 	DATA: DATA PASIEN YANG MEMILIKI KARAKTERISTIK SEBAGAI BERIKUT											
 		- ID PASIEN										
 		- NAMA PASIEN										
@@ -51,34 +51,23 @@ void printBulan(char bln[15]){
 	else if (strcmp(bln, "12") == 0) printf("Desember");
 }
 
-void sorting(int arr1[], char arr2[][100], int jumlah, int pos) {	
+int sorting(int arr1[], char arr2[][100], int jumlah) {	
 	int gap, right, jump;
 	
 	for (gap = jumlah/2; gap > 0; gap /= 2) {
-		for (right = gap; right < jumlah; right ++) {
-			int tempINT[4] = {psn[right].id, kmr[right].nkamar, kmr[right].tgl.tanggal, kmr[right].tgl.tahun};
-			char tempString[4][50];
+		for (right = gap; right < jumlah; right++) {
+			int tempINT[5] = {psn[right].id, kmr[right].nkamar, kmr[right].tgl.tanggal, kmr[right].tgl.tahun, arr1[right]};
+			char tempString[5][50];
 			strcpy(tempString[0], psn[right].nama);
 			strcpy(tempString[1], psn[right].jpenyakit);
 			strcpy(tempString[2], kmr[right].jkamar);
 			strcpy(tempString[3], kmr[right].tgl.bulan);
+			strcpy(tempString[4], arr2[right]);
 			
-			if (pos == 5) {
-				char tempDate[50];
-				sprintf(tempDate, "%d", tempINT[3]);
-				strncat(tempDate, tempString[3], 2);
-				char tgl[50];
-				
-				if (tempINT[2] > 9) {
-					sprintf(tgl, "%d", tempINT[2]);
-					strncat(tempDate, tgl, 2);
-				} else {
-					strncat(tempDate, "0", 1);
-					sprintf(tgl, "%d", tempINT[2]);
-					strncat(tempDate, tgl, 1);
-				}
-				
-				for (jump = right; jump >= gap && strcmp(arr2[jump-gap], tempDate) > 0; jump -= gap) {
+			if (strcmp(arr2[0], "kosong") == 0) {
+				for (jump = right; jump >= gap && arr1[jump-gap] > tempINT[4]; jump -= gap) {
+					arr1[jump] = arr1[jump-gap];
+					
 					psn[jump].id = psn[jump-gap].id;
 					strcpy(psn[jump].nama, psn[jump-gap].nama);
 					strcpy(psn[jump].jpenyakit, psn[jump-gap].jpenyakit);
@@ -88,8 +77,11 @@ void sorting(int arr1[], char arr2[][100], int jumlah, int pos) {
 					strcpy(kmr[jump].tgl.bulan, kmr[jump-gap].tgl.bulan);
 					kmr[jump].tgl.tahun = kmr[jump-gap].tgl.tahun;
 				}
-			} else if (strcmp(arr2[0], "kosong") == 0) {
-				for (jump = right; jump >= gap && arr1[jump-gap] > tempINT[pos]; jump -= gap) {
+				arr1[jump] = tempINT[4];
+			} else {			
+				for (jump = right; jump >= gap && strcmp(arr2[jump-gap], tempString[4]) > 0; jump -= gap) {
+					strcpy(arr2[jump], arr2[jump-gap]);
+					
 					psn[jump].id = psn[jump-gap].id;
 					strcpy(psn[jump].nama, psn[jump-gap].nama);
 					strcpy(psn[jump].jpenyakit, psn[jump-gap].jpenyakit);
@@ -99,18 +91,8 @@ void sorting(int arr1[], char arr2[][100], int jumlah, int pos) {
 					strcpy(kmr[jump].tgl.bulan, kmr[jump-gap].tgl.bulan);
 					kmr[jump].tgl.tahun = kmr[jump-gap].tgl.tahun;
 				}
-			} else {
-				for (jump = right; jump >= gap && strcmp(arr2[jump-gap], tempString[pos]) > 0; jump -= gap) {
-					psn[jump].id = psn[jump-gap].id;
-					strcpy(psn[jump].nama, psn[jump-gap].nama);
-					strcpy(psn[jump].jpenyakit, psn[jump-gap].jpenyakit);
-					kmr[jump].nkamar = kmr[jump-gap].nkamar;
-					strcpy(kmr[jump].jkamar, kmr[jump-gap].jkamar);
-					kmr[jump].tgl.tanggal = kmr[jump-gap].tgl.tanggal;
-					strcpy(kmr[jump].tgl.bulan, kmr[jump-gap].tgl.bulan);
-					kmr[jump].tgl.tahun = kmr[jump-gap].tgl.tahun;
-				}
-			} 
+				strcpy(arr2[jump], tempString[4]);	
+			}
 			
 			psn[jump].id = tempINT[0];
 			strcpy(psn[jump].nama, tempString[0]);
@@ -122,6 +104,7 @@ void sorting(int arr1[], char arr2[][100], int jumlah, int pos) {
 			kmr[jump].tgl.tahun = tempINT[3];
 		}
 	}
+	return 0;
 }
 
 void binary_search_Nama(int jumlah){
@@ -146,6 +129,7 @@ void binary_search_Nama(int jumlah){
 			break;
 		}else if(awal >= akhir){
 			printf("DATA TIDAK DITEMUKAN\n\n");
+			i = 0;
 			break;
 		}else if(hasil < 0){
     		awal = tengah+1;
@@ -176,6 +160,7 @@ void binary_search_ID(int jumlah){
 			break;
 		}else if(awal >= akhir){
 			printf("DATA TIDAK DITEMUKAN\n");
+			i = 0;
 			break;
 		}else if(caridata > psn[tengah].id){
     		awal=tengah+1;
@@ -206,6 +191,7 @@ void binary_search_Nkamar(int jumlah){
 			break;
 		}else if(awal >= akhir){
 			printf("DATA TIDAK DITEMUKAN\n");
+			i = 0;
 			break;
 		}else if(caridata > kmr[tengah].nkamar){
     		awal=tengah+1;
@@ -221,13 +207,13 @@ void binary_search_Nkamar(int jumlah){
 void ubahdata(int jumlah){
 	int caridata, found = -1, i, pilih, arr1[jumlah], awal=0, akhir=jumlah;
 	int tengah=(awal+akhir)/2;
-	char arr2[][100] = {{"kosong"}};
+	char arr2[][100] = {"kosong"};
 	
 	for (i = 0; i < jumlah; i++) {
 		arr1[i] = psn[i].id;
 	}
 	
-	sorting(arr1, arr2, jumlah, 0);
+	sorting(arr1, arr2, jumlah);
 	
 	for (i = 0; i < jumlah; i++) {
 		printf("%d. ID: %d, ", i+1, psn[i].id);
@@ -397,11 +383,11 @@ int main() {
 				else if (pilih == 11) strcpy(kmr[jumlah].tgl.bulan, "11");
 				else if (pilih == 12) strcpy(kmr[jumlah].tgl.bulan, "12");
 				
-				psn[jumlah].id = jumlah+1;
-				
 				printf("\nMasukkan Tahun Masuk : ");
 				scanf("%d", &kmr[jumlah].tgl.tahun);
 				fflush(stdin);
+				
+				psn[jumlah].id = jumlah+1;
 				
 				system("cls");
 				printf("Data Pasien Baru: \n");
@@ -418,10 +404,10 @@ int main() {
 				system("pause");
 				jumlah++;
 				break;
-			case 2 : //ubah data
+			case 2: //ubah data
 				ubahdata(jumlah);
 				break;
-			case 3 : //binary search
+			case 3: //binary search
 				printf("Pilih Menu Search: \n");
 				printf("1. Cari Nama\n2. Cari ID\n3. Cari Nomor Kamar");
 				printf("\nMasukkan pilihan : ");
@@ -433,32 +419,30 @@ int main() {
 						strcpy(arr2[i], psn[i].nama); 
 					}
 					
-					sorting(arr1, arr2, jumlah, 0);
+					sorting(arr1, arr2, jumlah);
 					
 					binary_search_Nama(jumlah);
-				}		
-				else if (pilih == 2) {
-					int i, arr1[jumlah]; char arr2[][100] = {{"kosong"}};
+				} else if (pilih == 2) {
+					int i, arr1[jumlah]; char arr2[][100] = {"kosong"};
 					for (i = 0; i < jumlah; i++) {
 						arr1[i] = psn[i].id;
 					}
 					
-					sorting(arr1, arr2, jumlah, 0);
+					sorting(arr1, arr2, jumlah);
 					
 					binary_search_ID(jumlah);
-				}
-				else if (pilih == 3) {
+				} else if (pilih == 3) {
 					int i, arr1[jumlah]; char arr2[][100] = {"kosong"};
 					for (i = 0; i < jumlah; i++) {
 						arr1[i] = kmr[i].nkamar;
 					}
 					
-					sorting(arr1, arr2, jumlah, 1);
+					sorting(arr1, arr2, jumlah);
 					
 					binary_search_Nkamar(jumlah);
 				}
 				break;
-			case 4 : // shell sort
+			case 4: // shell sort
 				printf("Pengurutan berdasarkan: \n");
 				printf("1. ID Pasien\n2. Nama\n3. Jenis Penyakit\n4. Jenis Kamar\n5. Nomor Kamar\n6. Tanggal Masuk");
 				printf("\nMasukkan kriteria : ");
@@ -471,21 +455,21 @@ int main() {
 				if (pilih == 1) {
 					printf("Data sesuai ID Pasien:\n\n");
 					
-					int arr1[jumlah]; char arr2[][100] = {{"kosong"}};
+					int arr1[jumlah]; char arr2[][100] = {"kosong"};
 					for (i = 0; i < jumlah; i++) {
 						arr1[i] = psn[i].id;
 					}
 					
-					sorting(arr1, arr2, jumlah, 0);
+					sorting(arr1, arr2, jumlah);
 				} else if (pilih == 2) {
-					printf("Data sesuai nama:\n\n");
+					printf("Data sesuai nama:\n\n");					
 					
 					int arr1[jumlah]; char arr2[100][100];
 					for (i = 0; i < jumlah; i++) {
 						strcpy(arr2[i], psn[i].nama); 
 					}
 					
-					sorting(arr1, arr2, jumlah, 0);
+					sorting(arr1, arr2, jumlah);
 				} else if (pilih == 3) {
 					printf("Data sesuai jenis penyakit:\n\n");
 					
@@ -494,7 +478,7 @@ int main() {
 						strcpy(arr2[i], psn[i].jpenyakit); 
 					}
 					
-					sorting(arr1, arr2, jumlah, 1);
+					sorting(arr1, arr2, jumlah);
 				} else if (pilih == 4) {
 					printf("Data sesuai jenis kamar:\n\n");
 					
@@ -503,8 +487,8 @@ int main() {
 						strcpy(arr2[i], kmr[i].jkamar); 
 					}
 					
-					sorting(arr1, arr2, jumlah, 2);
-				}else if (pilih == 5) {
+					sorting(arr1, arr2, jumlah);
+				} else if (pilih == 5) {
 					printf("Data sesuai nomor kamar:\n\n");
 					
 					int arr1[jumlah]; char arr2[][100] = {"kosong"};
@@ -512,7 +496,7 @@ int main() {
 						arr1[i] = kmr[i].nkamar;
 					}
 					
-					sorting(arr1, arr2, jumlah, 1);
+					sorting(arr1, arr2, jumlah);
 				} else if (pilih == 6) {
 					printf("Data sesuai tanggal masuk:\n\n");
 					
@@ -534,7 +518,7 @@ int main() {
 						strcpy(arr2[i], str);
 					}
 					
-					sorting(arr1, arr2 , jumlah, 5);
+					sorting(arr1, arr2 , jumlah);
 				}
 				
 				for (i = 0; i < jumlah; i++) {
@@ -547,7 +531,7 @@ int main() {
 				system("pause");
 				
 				break;
-			case 5 : //keluar
+			case 5: //keluar
 				printf("+------------------------------+-----------------------------+\n");
 				printf("+----------------------+ Terima kasih +----------------------+\n");
 				printf("+------------------------------+-----------------------------+\n");
