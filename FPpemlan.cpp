@@ -51,7 +51,7 @@ void printBulan(char bln[15]){
 	else if (strcmp(bln, "12") == 0) printf("Desember");
 }
 
-void sorting(int arr1[], char arr2[][100], int jumlah, int pos) {
+void sorting(int arr1[], char arr2[][100], int jumlah, int pos) {	
 	int gap, right, jump;
 	
 	for (gap = jumlah/2; gap > 0; gap /= 2) {
@@ -124,45 +124,169 @@ void sorting(int arr1[], char arr2[][100], int jumlah, int pos) {
 	}
 }
 
-/*void ubahdata(){
-	int caridata,jumlah,pilihm,found=0;
-	printf("Masukkan ID pasien yang ingin id ubah datanya : ");
-	scanf("%d",&caridata);
-	for(int i;i<jumlah;i++){
-		if(caridata == psn[i].id){
-			found = 1;
+void binary_search_Nama(int jumlah){
+	int i=1, hasil;
+	char caridata[50];
+	int awal=0, tengah, akhir=jumlah;
+	
+	fflush(stdin);
+	printf("\nMasukkan nama pasien yang ingin di cari : "); 
+    gets(caridata);
+    
+    while(i != 0){
+    	tengah = (awal+akhir)/2;
+    	hasil=strcmp(psn[tengah].nama, caridata);
+    	
+	    if(hasil == 0){
+			printf("DATA DITEMUKAN");
+			printf("\n\nNama\t\t: %s\nKamar\t\t: %s - %d\nPenyakit\t: %s\nTanggal Masuk\t: %d ", psn[tengah].nama, kmr[tengah].jkamar, kmr[tengah].nkamar, psn[tengah].jpenyakit, kmr[tengah].tgl.tanggal);
+			printBulan(kmr[tengah].tgl.bulan);
+			printf(" %d\n\n",kmr[tengah].tgl.tahun);
+	    	i = 0;
 			break;
-		}
-		else if(caridata != psn[i].id){
-			found = 0;
+		}else if(awal >= akhir){
+			printf("DATA TIDAK DITEMUKAN\n\n");
+			break;
+		}else if(hasil < 0){
+    		awal = tengah+1;
+		}else if(hasil > 0){
+			akhir = tengah-1;
 		}
 	}
 	
-	if(found == 1){
-		int pilih;
+	system("pause");
+	system("cls");
+}
+
+void binary_search_ID(int jumlah){
+	int i=1, caridata, awal=0, tengah, akhir=jumlah;
+	
+	printf("\nMasukkan ID pasien yang ingin di cari : "); 
+    scanf("%d", &caridata);
+    
+    while(i != 0){
+    	tengah=(awal+akhir)/2;
+    	
+    	if(psn[tengah].id == caridata){
+			printf("DATA DITEMUKAN");
+			printf("\n\nNama\t\t: %s\nKamar\t\t: %s - %d\nPenyakit\t: %s\nTanggal Masuk\t: %d ", psn[tengah].nama, kmr[tengah].jkamar, kmr[tengah].nkamar, psn[tengah].jpenyakit, kmr[tengah].tgl.tanggal);
+			printBulan(kmr[tengah].tgl.bulan);
+			printf(" %d\n\n",kmr[tengah].tgl.tahun);
+    		i = 0;
+			break;
+		}else if(awal >= akhir){
+			printf("DATA TIDAK DITEMUKAN\n");
+			break;
+		}else if(caridata > psn[tengah].id){
+    		awal=tengah+1;
+		}else if(caridata < psn[tengah].id){
+			akhir=tengah-1;
+		}
+	}
+	
+	system("pause");
+	system("cls");
+}
+
+void binary_search_Nkamar(int jumlah){
+	int i=1, caridata, awal=0, tengah, akhir=jumlah;
+	
+	printf("\nMasukkan nomor kamar yang ingin di cari : "); 
+    scanf("%d",&caridata);
+    
+   	while(i != 0){
+    	tengah=(awal+akhir)/2;
+    	
+   		if(kmr[tengah].nkamar == caridata){
+			printf("DATA DITEMUKAN");
+			printf("\n\nNama\t\t: %s\nKamar\t\t: %s - %d\nPenyakit\t: %s\nTanggal Masuk\t: %d ", psn[tengah].nama, kmr[tengah].jkamar, kmr[tengah].nkamar, psn[tengah].jpenyakit, kmr[tengah].tgl.tanggal);
+			printBulan(kmr[tengah].tgl.bulan);
+			printf(" %d\n\n",kmr[tengah].tgl.tahun);
+			i = 0;
+			break;
+		}else if(awal >= akhir){
+			printf("DATA TIDAK DITEMUKAN\n");
+			break;
+		}else if(caridata > kmr[tengah].nkamar){
+    		awal=tengah+1;
+		}else if(caridata < kmr[tengah].nkamar){
+			akhir=tengah-1;
+		}
+	}
+	
+	system("pause");
+	system("cls");
+}
+
+void ubahdata(int jumlah){
+	int caridata, found = -1, i, pilih, arr1[jumlah], awal=0, akhir=jumlah;
+	int tengah=(awal+akhir)/2;
+	char arr2[][100] = {{"kosong"}};
+	
+	for (i = 0; i < jumlah; i++) {
+		arr1[i] = psn[i].id;
+	}
+	
+	sorting(arr1, arr2, jumlah, 0);
+	
+	for (i = 0; i < jumlah; i++) {
+		printf("%d. ID: %d, ", i+1, psn[i].id);
+		printf("Nama: %s, Kamar %s - %d, Penyakit: %s, Tanggal Masuk: %d ", psn[i].nama, kmr[i].jkamar, kmr[i].nkamar, psn[i].jpenyakit, kmr[i].tgl.tanggal);
+		printBulan(kmr[i].tgl.bulan);
+		printf(" %d\n\n",kmr[i].tgl.tahun);
+	}
+	
+	printf("\nMasukkan ID pasien yang ingin di cari : "); 
+    scanf("%d", &caridata);
+    fflush(stdin);
+    
+    i = 1;
+    
+    while(i != 0){
+    	tengah=(awal+akhir)/2;
+    	if(psn[tengah].id == caridata){
+    		i = 0;
+    		found = tengah;
+			printf("DATA DITEMUKAN\n\n");
+			break;
+		}if(awal >= akhir){
+			printf("DATA TIDAK DITEMUKAN\n\n");
+			break;
+		}else if(caridata > psn[tengah].id){
+    		awal=tengah+1;
+		}else if(caridata < psn[tengah].id){
+			akhir=tengah-1;
+		}
+	}
+	
+	if (found >= 0) {
+		printf("Edit data: \n\n");
+		
 		printf("Masukkan Nama Pasien : ");
-		getline(cin,psn[jumlah].nama);
+		gets(psn[found].nama);
 		fflush(stdin);
+		
 		printf("\nMasukkan Jenis Penyakit : ");
-		getline(cin,psn[jumlah].jpenyakit);
+		gets(psn[found].jpenyakit);
 		fflush(stdin);
+		
 		printf("\nList kamar Pasien\n");
 		printf("1. I\n2. II\n3. III\n4. VIP");
 		printf("\nMasukkan Jenis Kamar untuk pasien : ");
 		scanf("%d", &pilih);
 		fflush(stdin);
 				
-		if (pilih == 1) kmr[jumlah].jkamar = "I";
-		else if (pilih == 2) kmr[jumlah].jkamar = "II";
-		else if (pilih == 3) kmr[jumlah].jkamar = "III";
-		else if (pilih == 4) kmr[jumlah].jkamar = "VIP";
+		if (pilih == 1) strcpy(kmr[found].jkamar, "I");
+		else if (pilih == 2) strcpy(kmr[found].jkamar, "II");
+		else if (pilih == 3) strcpy(kmr[found].jkamar, "III");
+		else if (pilih == 4) strcpy(kmr[found].jkamar, "VIP");
 		
 		printf("\nMasukkan Nomor Kamar : ");
-		scanf("%d", &kmr[jumlah].nkamar);
+		scanf("%d", &kmr[found].nkamar);
 		fflush(stdin);
 				
 		printf("\nMasukkan Tanggal Masuk : ");
-		scanf("%d", &kmr[jumlah].tgl.tanggal);
+		scanf("%d", &kmr[found].tgl.tanggal);
 		fflush(stdin);
 				
 		printf("\nList Bulan\n");
@@ -171,183 +295,42 @@ void sorting(int arr1[], char arr2[][100], int jumlah, int pos) {
 		scanf("%d", &pilih);
 		fflush(stdin);
 				
-		if (pilih == 1) kmr[jumlah].tgl.bulan = "01";
-		else if (pilih == 2) kmr[jumlah].tgl.bulan = "02";
-		else if (pilih == 3) kmr[jumlah].tgl.bulan = "03";
-		else if (pilih == 4) kmr[jumlah].tgl.bulan = "04";
-		else if (pilih == 5) kmr[jumlah].tgl.bulan = "05";
-		else if (pilih == 6) kmr[jumlah].tgl.bulan = "06";
-		else if (pilih == 7) kmr[jumlah].tgl.bulan = "07";
-		else if (pilih == 8) kmr[jumlah].tgl.bulan = "08";
-		else if (pilih == 9) kmr[jumlah].tgl.bulan = "09";
-		else if (pilih == 10) kmr[jumlah].tgl.bulan = "10";
-		else if (pilih == 11) kmr[jumlah].tgl.bulan = "11";
-		else if (pilih == 12) kmr[jumlah].tgl.bulan = "12";
+		if (pilih == 1) strcpy(kmr[found].tgl.bulan, "01");
+		else if (pilih == 2) strcpy(kmr[found].tgl.bulan, "02");
+		else if (pilih == 3) strcpy(kmr[found].tgl.bulan, "03");
+		else if (pilih == 4) strcpy(kmr[found].tgl.bulan, "04");
+		else if (pilih == 5) strcpy(kmr[found].tgl.bulan, "05");
+		else if (pilih == 6) strcpy(kmr[found].tgl.bulan, "06");
+		else if (pilih == 7) strcpy(kmr[found].tgl.bulan, "07");
+		else if (pilih == 8) strcpy(kmr[found].tgl.bulan, "08");
+		else if (pilih == 9) strcpy(kmr[found].tgl.bulan, "09");
+		else if (pilih == 10) strcpy(kmr[found].tgl.bulan, "10");
+		else if (pilih == 11) strcpy(kmr[found].tgl.bulan, "11");
+		else if (pilih == 12) strcpy(kmr[found].tgl.bulan, "12");
 				
 		printf("\nMasukkan Tahun Masuk : ");
-		scanf("%d", &kmr[jumlah].tgl.tahun);
+		scanf("%d", &kmr[found].tgl.tahun);
 		fflush(stdin);
 				
-		psn[jumlah].nama == psn[jumlah].nama;
-		psn[jumlah].jpenyakit == psn[jumlah].jpenyakit;
-		kmr[jumlah].jkamar == kmr[jumlah].jkamar;
-		kmr[jumlah].tgl.tanggal == kmr[jumlah].tgl.tanggal;
-		kmr[jumlah].tgl.bulan == kmr[jumlah].tgl.bulan;
-		kmr[jumlah].tgl.tahun == kmr[jumlah].tgl.tahun;
-	}else
-		printf("DATA TIDAK DITEMUKAN");
+		system("cls");
+		printf("Data Pasien: \n");
+		
+		printf("\nID\t\t: %d", psn[found].id);
+		printf("\nNama\t\t: %s", psn[found].nama);
+		printf("\nJenis Penyakit\t: %s", psn[found].jpenyakit);
+		printf("\nJenis Kamar\t: %s", kmr[found].jkamar);
+		printf("\nNomor Kamar\t: %d", kmr[found].nkamar);
+		printf("\nTanggal Masuk\t: %d ", kmr[found].tgl.tanggal);
+		printBulan(kmr[found].tgl.bulan);
+		printf(" %d\n\n", kmr[found].tgl.tahun);
+	}
 	
-	getch();
+	system("pause");
 	system("cls");
-}*/
-
-void binary_search_Nama(int jumlah){
-	int i=0, ketemu=0,hasil;
-	char caridata[50];
-	int awal=0, akhir;
-	int tengah=(awal+akhir)/2;
-	akhir = jumlah;
-	printf("\n%d",jumlah);
-	printf("\nMasukkan nama pasien yang ingin di cari : "); 
-    scanf("%s",caridata);
-    while(i<jumlah){
-    	hasil=strcmp(psn[tengah].nama, caridata);
-	    if(hasil == 0){
-			printf("DATA DITEMUKAN");
-			printf("\n\nNama\t\t: %s\nKamar\t\t: %s - %d\nPenyakit\t: %s\nTanggal Masuk\t: %d ", psn[tengah].nama, kmr[tengah].jkamar, kmr[tengah].nkamar, psn[tengah].jpenyakit, kmr[tengah].tgl.tanggal);
-			printBulan(kmr[tengah].tgl.bulan);
-			printf(" %d\n\n",kmr[tengah].tgl.tahun);
-			system("pause");
-			system("cls");
-			break;
-		}else if(awal > akhir){
-			printf("DATA TIDAK DITEMUKAN\n");
-			system("pause");
-			system("cls");
-			break;
-		}else if(hasil > 0){
-    		awal=tengah+1;
-    		tengah=(awal+akhir)/2;
-    		i++;
-		}else if(hasil < 0){
-			akhir=tengah-1;
-			tengah=(awal+akhir)/2;
-			i++;
-		}
-	}
-}
-
-
-void binary_search_ID(int jumlah){
-	int i=0, ketemu=0,caridata;
-	int awal=0, akhir;
-	int tengah=(awal+akhir)/2;
-	akhir = jumlah;
-	printf("\nMasukkan ID pasien yang ingin di cari : "); 
-    scanf("%d",&caridata);
-    while(i<jumlah){
-    	if(psn[tengah].id == caridata){
-    		i=jumlah;
-			printf("DATA DITEMUKAN");
-			printf("\n\nNama\t\t: %s\nKamar\t\t: %s - %d\nPenyakit\t: %s\nTanggal Masuk\t: %d ", psn[tengah].nama, kmr[tengah].jkamar, kmr[tengah].nkamar, psn[tengah].jpenyakit, kmr[tengah].tgl.tanggal);
-			printBulan(kmr[tengah].tgl.bulan);
-			printf(" %d\n\n",kmr[tengah].tgl.tahun);
-			system("pause");
-			system("cls");
-			break;
-		}if(awal >= akhir){
-			printf("DATA TIDAK DITEMUKAN\n");
-			system("pause");
-			system("cls");
-			break;
-		}else if(caridata > psn[tengah].id){
-    		awal=tengah+1;
-    		tengah=(awal+akhir)/2;
-    		i++;
-		}else if(caridata < psn[tengah].id){
-			akhir=tengah-1;
-			tengah=(awal+akhir)/2;
-			i++;
-		}
-	}
-}
-
-void binary_search_Nkamar(int jumlah){
-
-	int caridata, i=0,ketemu=0;
-	int awal=0, akhir;
-	int tengah=(awal+akhir)/2;
-	akhir = jumlah;
-	printf("\nMasukkan Nomor Kamar yang ingin di cari : "); 
-    scanf("%d",&caridata);
-   	while(i<jumlah){
-   		if(kmr[tengah].nkamar == caridata){
-			i=jumlah;
-			printf("DATA DITEMUKAN");
-			printf("\n\nNama\t\t: %s\nKamar\t\t: %s - %d\nPenyakit\t: %s\nTanggal Masuk\t: %d ", psn[tengah].nama, kmr[tengah].jkamar, kmr[tengah].nkamar, psn[tengah].jpenyakit, kmr[tengah].tgl.tanggal);
-			printBulan(kmr[tengah].tgl.bulan);
-			printf(" %d\n\n",kmr[tengah].tgl.tahun);
-			system("pause");
-			system("cls");
-			break;
-		}if(awal >= akhir){
-			printf("DATA TIDAK DITEMUKAN\n");
-			system("pause");
-			system("cls");
-			break;
-		}else if(caridata > kmr[tengah].nkamar){
-    		awal=tengah+1;
-    		tengah=(awal+akhir)/2;
-    		i++;
-		}else if(caridata < kmr[tengah].nkamar){
-			akhir=tengah-1;
-			tengah=(awal+akhir)/2;
-			i++;
-		}
-	}
-
-//	int caridata, i=0, ketemu=0,jumlah;
-//	int awal=0, akhir;
-//	int tengah=(awal+akhir)/2;
-//	akhir = jumlah;
-//	printf("\nMasukkan Nomor Kamar yang ingin di cari : "); 
-//    scanf("%d",&caridata);
-//    while(i<jumlah){
-//    	if(caridata == kmr[tengah].nkamar){
-//			ketemu=1;
-//			break;
-//		}else if(caridata > kmr[tengah].nkamar){
-//    		awal=tengah+1;
-//    		tengah=(awal+akhir)/2;
-//    		ketemu=1;
-//		}else if(caridata < kmr[tengah].nkamar){
-//			akhir=tengah-1;
-//			tengah=(awal+akhir)/2;
-//			ketemu=1;
-//		}
-//		i++;	
-//	}
-//	if(ketemu==1){
-//		printf("DATA DITEMUKAN");
-//		for (i = 0; i < kmr[tengah].nkamar ; i++) {
-//			cout << "\nNama\t\t: " << psn[i].nama;
-//			printf("\nID\t\t: %d", psn[i].id);
-//			cout << "\nJenis Penyakit\t: " << psn[i].jpenyakit;
-//			cout << "\nJenis Kamar\t: "  << kmr[i].jkamar;
-//			printf("\nNomor Kamar\t: %d", kmr[i].nkamar);
-//			cout << "\nTanggal Masuk\t: " << kmr[i].tgl.tanggal << " " << printBulan(kmr[i].tgl.bulan) << " " << kmr[i].tgl.tahun;
-//		}
-//	}else
-//		printf("DATA TIDAK DITEMUKAN");
-//	getch();
-//	system("cls");
 }
 
 int main() {
-	
-	int jumlah=0,dicari,awal=0,ketemu=0;
-	
-	int pilih,menu,loop=0,search,datatengah;
+	int jumlah=0, pilih, menu, loop=0;
 	
 	while (loop == 0) {
 		system("cls");
@@ -421,7 +404,7 @@ int main() {
 				fflush(stdin);
 				
 				system("cls");
-				printf("\nData Pasien \n");
+				printf("Data Pasien Baru: \n");
 				
 				printf("\nID\t\t: %d", psn[jumlah].id);
 				printf("\nNama\t\t: %s", psn[jumlah].nama);
@@ -430,14 +413,13 @@ int main() {
 				printf("\nNomor Kamar\t: %d", kmr[jumlah].nkamar);
 				printf("\nTanggal Masuk\t: %d ", kmr[jumlah].tgl.tanggal);
 				printBulan(kmr[jumlah].tgl.bulan);
-				printf(" %d", kmr[jumlah].tgl.tahun);
+				printf(" %d\n\n", kmr[jumlah].tgl.tahun);
 				
-				getch();
-				
+				system("pause");
 				jumlah++;
-				
 				break;
 			case 2 : //ubah data
+				ubahdata(jumlah);
 				break;
 			case 3 : //binary search
 				printf("Pilih Menu Search: \n");
@@ -445,13 +427,34 @@ int main() {
 				printf("\nMasukkan pilihan : ");
 				scanf("%d", &pilih);
 				
-				if (pilih == 1)	 {
+				if (pilih == 1) {
+					int i, arr1[jumlah]; char arr2[100][100];
+					for (i = 0; i < jumlah; i++) {
+						strcpy(arr2[i], psn[i].nama); 
+					}
+					
+					sorting(arr1, arr2, jumlah, 0);
+					
 					binary_search_Nama(jumlah);
 				}		
 				else if (pilih == 2) {
+					int i, arr1[jumlah]; char arr2[][100] = {{"kosong"}};
+					for (i = 0; i < jumlah; i++) {
+						arr1[i] = psn[i].id;
+					}
+					
+					sorting(arr1, arr2, jumlah, 0);
+					
 					binary_search_ID(jumlah);
 				}
 				else if (pilih == 3) {
+					int i, arr1[jumlah]; char arr2[][100] = {"kosong"};
+					for (i = 0; i < jumlah; i++) {
+						arr1[i] = kmr[i].nkamar;
+					}
+					
+					sorting(arr1, arr2, jumlah, 1);
+					
 					binary_search_Nkamar(jumlah);
 				}
 				break;
